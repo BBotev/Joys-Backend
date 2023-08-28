@@ -18,7 +18,7 @@ api.use(cors());
 
 const router = Router();
 
-router.post("/login",async(req,res)=>{
+router.get("/login",async(req,res)=>{
     
     const {account,password}=req.body
 
