@@ -73,8 +73,7 @@ router.post("/orders",async(req,res)=>{
         User_id:id,
         name:check.firstName,
         status:1,
-        date: date.getFullYear()+'-'+("0"+(date.getMonth()+1)).slice(-2)+'-'+
-        ("0"+(date.getDate())).slice(-2)+' '+date.getHours()+':'+("0"+(date.getMinutes())).slice(-2),
+        date: date.toLocaleString('en-CA', { timeZone: 'Europe/Sofia', hour12: false}).replace(/,/g, ''),
         email:check.email,
         phone:check.phone,
         products:orderText,
