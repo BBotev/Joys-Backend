@@ -6,5 +6,3 @@
   from = "/api/*"
   status = 200
   to = "/.netlify/functions/api/:splat"
-  [context.production.environment]
-  TZ = "Europe/Sofia"
