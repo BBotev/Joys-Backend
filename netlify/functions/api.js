@@ -25,7 +25,7 @@ router.post("/login",async(req,res)=>{
     try{
         const check = await joysUsers.findOne({account:account,password:password})
         if(check){
-            res.json({status: 'exist', name: check.firstName, id:check._id})
+            res.json({status: 'exist', name: check.firstName, id:check._id, gender:check.gender})
         }
         else{
             res.json("notexist")
@@ -38,7 +38,7 @@ router.post("/login",async(req,res)=>{
 
 router.post("/signup",async(req,res)=>{
    
-    const {firstName,secondName,phone,account,password,email}=req.body
+    const {firstName,secondName,phone,account,password,email,gender}=req.body
 
     const data={
         firstName:firstName,
@@ -46,7 +46,8 @@ router.post("/signup",async(req,res)=>{
         phone:phone,
         account:account,
         password:password,
-        email:email
+        email:email,
+        gender:gender
     }
 
     try{
