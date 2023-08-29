@@ -11,14 +11,14 @@ console.log('mongodb connected')
 const joysUsers = require("./mongodbUsers");
 const joysOrders = require("./mongodbOrders");
 const cors = require("cors");
-
+console.log(joysUsers)
 const api = express();
 api.use(express.json());
 api.use(cors());
 
 const router = Router();
 
-router.post("/login",async(req,res)=>{
+router.get("/login",async(req,res)=>{
     
     const {account,password}=req.body
 
