@@ -7,4 +7,4 @@
   status = 200
   to = "/.netlify/functions/api/:splat"
   [build.environment]
-   TZ = 'Europe/Sofia'
+   TZ = "Europe/Sofia"
