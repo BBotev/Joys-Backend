@@ -36,6 +36,76 @@ router.post("/login",async(req,res)=>{
     }
 })
 
+router.post("/signup",async(req,res)=>{
+   
+    const {firstName,secondName,phone,account,password,email}=req.body
+
+    const data={
+        firstName:firstName,
+        secondName:secondName,
+        phone:phone,
+        account:account,
+        password:password,
+        email:email
+    }
+
+    try{
+        const check = await joysUsers.findOne({account:account})
+        if(check){
+            res.json("exist")
+        }
+        else{
+            res.json("notexist")
+            await joysUsers.insertMany([data])
+        }
+    }
+    catch(e){
+        res.json("notexist")
+    }
+})
+
+router.post("/orders",async(req,res)=>{ 
+    const {orderText,id,sum} = req.body;
+    const check = await joysUsers.findOne({_id:id});
+    const date = new Date();
+    const data = {
+        User_id:id,
+        name:check.firstName,
+        status:1,
+        date: date.getFullYear()+'-'+("0"+(date.getMonth()+1)).slice(-2)+'-'+
+        ("0"+(date.getDate())).slice(-2)+'-'+date.getHours()+':'+("0"+(date.getMinutes())).slice(-2),
+        email:check.email,
+        phone:check.phone,
+        products:orderText,
+        totalSum:sum
+    }
+ 
+    try {
+        const check = await joysUsers.findOne({_id:id});
+        if(check){
+                   await joysOrders.insertMany([data]);  
+                   res.json("exist")          
+        }
+    
+    } catch (error) {
+        res.json("notexist")
+    }
+  })
+
+router.post("/getorders",async (req,res)=>{
+   
+    const currentUser = req.body
+       const allOrders = await joysOrders.find({User_id:currentUser.id});
+        try {      
+           if(allOrders){    
+            res.json(allOrders)        
+       }
+    } catch (error) {
+     res.json("notexist")
+      } 
+    
+    })
+
 api.use('/api/', router);
 
 export const handler = serverless(api);
