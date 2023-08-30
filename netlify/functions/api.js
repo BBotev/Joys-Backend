@@ -107,6 +107,17 @@ router.post("/getorders",async (req,res)=>{
     
     })
 
+router.get("/admin",async (req,res)=>{
+    const allOrders = await joysOrders.find();
+    try {      
+        if(allOrders){    
+         res.json(allOrders)        
+    }
+ } catch (error) {
+  res.json("notexist")
+   } 
+})
+
 api.use('/api/', router);
 
 export const handler = serverless(api);
