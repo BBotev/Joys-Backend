@@ -118,6 +118,20 @@ router.get("/admin",async (req,res)=>{
    } 
 })
 
+router.post("/status",async (req,res)=>{
+    const data = req.body;
+    joysOrders.findOneAndUpdate(
+        {_id:data.orderId},
+        {$set:{status: data.selectValue}},
+        {returnNewDocument: true}
+    )
+    try {
+        res.json("exist")
+    } catch (error) {
+        res.json("notexist")
+    }
+})
+
 api.use('/api/', router);
 
 export const handler = serverless(api);
