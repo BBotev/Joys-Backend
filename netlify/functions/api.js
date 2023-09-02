@@ -134,7 +134,7 @@ router.post("/delete",async (req,res)=>{
     try {
         res.json("exist")
     } catch (error) {
-         res.json("notexist")
+        res.json("notexist")
     }
 })
 
