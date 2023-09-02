@@ -118,17 +118,23 @@ router.get("/admin",async (req,res)=>{
    } 
 })
 
-router.post("/status",async (req,res)=>{
+router.put("/status",async (req,res)=>{
     const data = req.body;
-    joysOrders.findOneAndUpdate(
-        {_id:data.orderId},
-        {$set:{status: data.selectValue}},
-        {returnNewDocument: true}
-    )
+    await joysOrders.updateOne({ _id: data.orderId },{$set:{status:data.selectValue}})
     try {
         res.json("exist")
     } catch (error) {
         res.json("notexist")
+    }
+})
+
+router.post("/delete",async (req,res)=>{
+    const data = req.body;
+    await joysOrders.deleteOne({_id:data.selectedOrder})
+    try {
+        res.json("exist")
+    } catch (error) {
+         res.json("notexist")
     }
 })
 
