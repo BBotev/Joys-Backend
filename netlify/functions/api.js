@@ -78,7 +78,8 @@ router.post("/orders",async(req,res)=>{
         email:check.email,
         phone:check.phone,
         products:orderText,
-        totalSum:sum
+        totalSum:sum,
+        day:""
     }
  
     try {
@@ -118,9 +119,9 @@ router.get("/admin",async (req,res)=>{
    } 
 })
 
-router.put("/status",async (req,res)=>{
+router.put("/updateorder",async (req,res)=>{
     const data = req.body;
-    await joysOrders.updateOne({ _id: data.orderId },{$set:{status:data.selectValue}})
+    await joysOrders.updateOne({ _id: data.orderId },{$set:{status:data.selectValue,day:data.day}})
     try {
         res.json("exist")
     } catch (error) {
