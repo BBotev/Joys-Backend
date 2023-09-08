@@ -108,11 +108,19 @@ router.post("/getorders",async (req,res)=>{
     
     })
 
-router.get("/admin",async (req,res)=>{
-    const allOrders = await joysOrders.find();
+router.post("/admin",async (req,res)=>{
+    const day = req.body;
+    const tomorrow = new Date(day.date);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const stringTomorrow = tomorrow.toISOString().slice(0,10);
+    
     try {      
-        if(allOrders){    
-         res.json(allOrders)        
+        if(day.date){  
+            const sortOrders = await joysOrders.find({ date: { $gt:day.date, $lt:stringTomorrow } });  
+         res.json(sortOrders)        
+    }else{
+        const allOrders =  await joysOrders.find();
+        res.json(allOrders)
     }
  } catch (error) {
   res.json("notexist")
